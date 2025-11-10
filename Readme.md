@@ -73,6 +73,8 @@ woowoo main() {
 | woowoo | Function definition | woowoo main() |
 | weewoowee | Return statement | weewoowee 42 |
 
+<img width="1919" height="996" alt="image" src="https://github.com/user-attachments/assets/6b0f295d-44a1-4747-a923-10e327ee3e7d" />
+
 ## **Building and Running**
 
 ### **Prerequisites**
