@@ -1,0 +1,26 @@
+# test.weewoo
+# Our first *real* program!
+
+woowoo main() {
+    
+    woo 1000  # Print a literal
+
+    # Test variable declaration (alloca + store)
+    wee x = 10
+    
+    # Test variable access (load)
+    woo x 
+
+    # Test re-assignment! (store)
+    x = x + 20  # This is the new part!
+    
+    woo x # Should print 30
+
+    weewoo (x > 25) {
+        woo 99  # Should print this
+    } woowee {
+        woo -1
+    }
+
+    # Should return 99 from the if-expression
+}
