@@ -1,4 +1,4 @@
-//defining our tokens
+
 
 #ifndef WEEWOO_LEXER_H
 #define WEEWOO_LEXER_H
@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <string>
 
 enum Token {
     TOKEN_EOF = -1,
@@ -23,6 +24,12 @@ enum Token {
     TOKEN_IDENTIFIER = -9,
     TOKEN_NUMBER = -10,
 
+    //other
+    TOKEN_STRING = -11,
+    TOKEN_BOOL = -12,
+    TOKEN_TRUE = -13,
+    TOKEN_FALSE = -14,
+
 };
 
 
@@ -38,7 +45,7 @@ class Lexer {
     //holds custo keyworks
     std::map<std::string, Token> m_KeywordMap;
     char getNextChar(); 
-
+    std::string m_StringVal;
 
     public:
 
@@ -49,6 +56,7 @@ class Lexer {
         //getters for toekn value
         std::string getIdentifierStr() const {return m_IdentifierStr;}
         double getNumVal() const{return m_NumVal;}
+        std::string getStringVal() const { return m_StringVal; }
 };
 
 #endif 

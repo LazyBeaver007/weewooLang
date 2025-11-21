@@ -12,6 +12,8 @@ Lexer::Lexer(const std::string& source) : m_Source(source), m_CurrentIndex(0), m
     m_KeywordMap["weewee"] = TOKEN_WEEWEE;
     m_KeywordMap["woowoo"] = TOKEN_WOOWOO;
     m_KeywordMap["weewoowee"] = TOKEN_WEEWOOWEE;
+    m_KeywordMap["true"] = TOKEN_TRUE;
+    m_KeywordMap["false"] = TOKEN_FALSE;
 }
 
 //helper for getting next char and move index
@@ -31,7 +33,7 @@ char Lexer::peekNextChar() {
 }
 
 //main
-// In lexer.cpp, update the getNextToken() method:
+// In lexer.cpp
 
 int Lexer::getNextToken() {
     static char LastChar = ' ';
@@ -90,6 +92,41 @@ int Lexer::getNextToken() {
             return ThisChar;
         }
     }
+
+
+    //strings
+    // 
+    if (LastChar == '"') {
+        std::string Str;
+        LastChar = getNextChar(); // skip opening quote
+
+        while (LastChar != '"' && LastChar != '\0') {
+            // Handle escape sequences
+            if (LastChar == '\\') {
+                LastChar = getNextChar();
+                switch (LastChar) {
+                case 'n': Str += '\n'; break;
+                case 't': Str += '\t'; break;
+                case 'r': Str += '\r'; break;
+                case '"': Str += '"'; break;
+                case '\\': Str += '\\'; break;
+                default: Str += LastChar; break;
+                }
+            }
+            else {
+                Str += LastChar;
+            }
+            LastChar = getNextChar();
+        }
+
+        if (LastChar == '"') {
+            LastChar = getNextChar(); // skip closing quote
+        }
+
+        m_StringVal = Str;
+        return TOKEN_STRING;
+    }
+
 
     //identifiers and keywords
     if (isalpha(LastChar)) { // Starts with a letter

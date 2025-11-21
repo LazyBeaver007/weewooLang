@@ -12,6 +12,22 @@ Parser::Parser(Lexer& lexer) : m_Lexer(lexer) {
 }
 
 
+
+/// stringexpr ::= '"' characters '"'
+std::unique_ptr<ExprAST> Parser::parseStringExpr() {
+    std::string value = m_Lexer.getStringVal();
+    getNextToken(); // consume the string token
+    return std::make_unique<StringExprAST>(value);
+}
+
+/// boolexpr ::= 'true' | 'false'
+std::unique_ptr<ExprAST> Parser::parseBoolExpr() {
+    bool value = (m_CurrentToken == TOKEN_TRUE);
+    getNextToken(); // consume the bool token
+    return std::make_unique<BoolExprAST>(value);
+}
+
+
 std::unique_ptr<ExprAST> Parser::logError(const char* str) {
     fprintf(stderr, "Error: %s\n", str);
     return nullptr;
@@ -252,6 +268,13 @@ std::unique_ptr<ExprAST> Parser::parsePrimary() {
         return parsePrintStmt();
     case TOKEN_WEEWOOWEE: // 'return'
         return parseReturnExpr();
+
+    case TOKEN_STRING:
+        return parseStringExpr();
+    case TOKEN_TRUE:
+    case TOKEN_FALSE:
+        return parseBoolExpr();
+
     case '{':
         return parseBlock();
     case '-': // Unary minus
@@ -266,6 +289,9 @@ std::unique_ptr<ExprAST> Parser::parsePrimary() {
         fprintf(stderr, "Unknown token: %d (char: '%c')\n", m_CurrentToken,
             isprint(m_CurrentToken) ? m_CurrentToken : '?');
         return logError("unknown token when expecting an expression");
+
+
+    
     }
 }
 
@@ -296,6 +322,10 @@ std::unique_ptr<ExprAST> Parser::parseBinOpRHS(int exprPrec,
         lhs = std::make_unique<BinaryExprAST>(binOp, std::move(lhs), std::move(rhs));
     }
 }
+
+
+
+
 
 /// expression
 ///   ::= primary binoprhs
