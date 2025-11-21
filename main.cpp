@@ -16,6 +16,11 @@ extern "C" double print_double(double d) {
     return d;
 }
 
+extern "C" double print_string(const char* str) {
+    std::cout << "WeeWoo Output: " << str << std::endl;
+    return 0.0; 
+}
+
 int main(int argc, char** argv) {
    
     if (argc != 2) {
@@ -78,7 +83,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    
+    EE->addGlobalMapping("print_string", (uint64_t)print_string);
     EE->addGlobalMapping("print_double", (uint64_t)print_double);
     EE->finalizeObject();
 

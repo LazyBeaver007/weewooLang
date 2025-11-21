@@ -26,6 +26,23 @@ public:
 };
 
 
+
+// String literal expression
+class StringExprAST : public ExprAST {
+    std::string m_Value;
+public:
+    StringExprAST(const std::string& value) : m_Value(value) {}
+    llvm::Value* codegen() override;
+};
+
+// Boolean literal expression  
+class BoolExprAST : public ExprAST {
+    bool m_Value;
+public:
+    BoolExprAST(bool value) : m_Value(value) {}
+    llvm::Value* codegen() override;
+};
+
 class VariableExprAST : public ExprAST {
     std::string m_Name;
 public:
@@ -145,5 +162,7 @@ public:
     const PrototypeAST* getProto() const { return m_Proto.get(); }
     llvm::Function* codegen();
 };
+
+
 
 #endif //WEEWOO_AST_H
