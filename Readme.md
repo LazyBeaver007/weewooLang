@@ -2,6 +2,9 @@
 https://weewoo-web.vercel.app/
 A custom programming language implementation built with LLVM for learning compiler design. Inspired by Expedition 33 and Kaleidoscope.
 
+## **Weewoo lsp and vs code extension**
+https://github.com/LazyBeaver007/weewooLSP/releases/tag/extension
+
 ## **Features**
 
 * **Simple Syntax**: Easy-to-learn language with fun keywords  
